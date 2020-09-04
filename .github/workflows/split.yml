@@ -34,7 +34,8 @@ jobs:
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
  
-      - run: echo "::set-output name=upload_url::${UPLOAD_URL}"
+      - id: save_url
+        run: echo "::set-output name=upload_url::${UPLOAD_URL}"
         
       - name: Upload Release Asset
         id: upload-release-asset 
@@ -42,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: $UPLOAD_URL
+          upload_url: ${{ steps.save_url.outputs.upload_url }}
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
           asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_content_type: application/tar+gzip
