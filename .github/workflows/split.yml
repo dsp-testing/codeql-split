@@ -39,7 +39,7 @@ jobs:
         run: |
           gunzip codeql-bundle.tar.gz
           tar -f codeql-bundle.tar --delete codeql
-          unzip codeql-${{matrix.platform}}.zip 
+          unzip -q codeql-${{matrix.platform}}.zip 
           tar -f codeql-bundle.tar --append codeql
           gzip codeql-bundle.tar
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
@@ -48,7 +48,7 @@ jobs:
       - name: Upload Platform Package
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
-        if: ${{ matrix.language == "cpp" }} # Only once per platform, cpp is arbitrary
+        if: ${{ matrix.language == cpp }} # Only once per platform, cpp is arbitrary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
