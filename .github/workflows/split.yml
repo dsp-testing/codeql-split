@@ -10,6 +10,7 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
+      RELEASE_URL: "https://github.com/marcogario/codeql-split/releases/tag/v1"
 
     strategy:
       matrix: 
@@ -17,13 +18,6 @@ jobs:
         # language: ["cpp", "csharp", "go", "java", "javascript", "python"]
 
     steps:
-      - name: Create a Release (This would not be needed in the final version)
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.sha }}
-          release_name: bundles
-          draft: true
-
       - name: Download
         run: |
           wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
@@ -39,4 +33,10 @@ jobs:
           gzip codeql-bundle.tar
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
 
-
+      - name: Upload Platform Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${RELEASE_URL} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
