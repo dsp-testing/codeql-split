@@ -1,0 +1,14 @@
+name: Run CodeQL
+on:
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Initialize CodeQL
+       uses: github/codeql-action/init@v1
+       with:
+        tools: https://github.com/marcogario/codeql-split/releases/download/codeql-bundle-2020/codeql-bundle-linux64-cpp.tar.gz
+        token: ${{ secrets.GITHUB_TOKEN }}
+
