@@ -34,12 +34,7 @@ jobs:
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
 
-      - name: Upload Platform Package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload a Platform Package
+        uses: actions/upload-artifact@v2.1.4
         with:
-          upload_url: ${RELEASE_URL}
-          asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
-          asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
-          asset_content_type: application/tar+gzip
+          path: ./codeql-bundle-${{matrix.platform}}.tar.gz
