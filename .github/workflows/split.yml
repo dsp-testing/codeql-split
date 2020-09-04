@@ -20,15 +20,12 @@ jobs:
       - name: Download
         run: |
           wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
-          # wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
-
       - name: Unzip
         run: gunzip codeql-bundle.tar.gz
         
       - name: Platform Package
         # Replace the codeql-binaries with the platform specific ones
         run: |
-          # gunzip codeql-bundle.tar.gz
           tar -f codeql-bundle.tar --delete codeql
           unzip codeql-${{matrix.platform}}.zip 
           tar -f codeql-bundle.tar --append codeql
