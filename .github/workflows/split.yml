@@ -66,7 +66,8 @@ jobs:
           [ "${{matrix.language}}" != "java" ] && tar -f codeql-bundle-${{matrix.platform}}.tar --delete codeql/java --delete ql/java
           [ "${{matrix.language}}" != "javascript" ] && tar -f codeql-bundle-${{matrix.platform}}.tar --delete codeql/javascript --delete ql/javascript
           [ "${{matrix.language}}" != "python" ] && tar -f codeql-bundle-${{matrix.platform}}.tar --delete codeql/python --delete ql/python
-          mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}-${{matrix.language}}.tar.gz
+          gzip codeql-bundle-${{matrix.platform}}.tar
+          mv codeql-bundle-${{matrix.platform}}.tar.gz codeql-bundle-${{matrix.platform}}-${{matrix.language}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}-${{matrix.language}}.tar.gz
       
       - name: Upload Language Package 
