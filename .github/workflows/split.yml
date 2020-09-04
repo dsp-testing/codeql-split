@@ -10,7 +10,7 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_TAG: "v2"
+      RELEASE_TAG: "codeql-bundle-20200904"
 
     strategy:
       matrix: 
