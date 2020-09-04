@@ -10,14 +10,16 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_URL: "https://uploads.github.com/repos/marcogario/codeql-split/releases/30712907/assets{?name,label}"
-
+      RELEASE_URL: "https://uploads.github.com/repos/marcogario/codeql-split/releases/30712907/assets"
+      RELEASE_TAG: "v1"
+    
     strategy:
       matrix: 
         platform: ["linux64", "osx64", "win64"]
         # language: ["cpp", "csharp", "go", "java", "javascript", "python"]
 
     steps:
+  
       - name: Download
         run: |
           wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
