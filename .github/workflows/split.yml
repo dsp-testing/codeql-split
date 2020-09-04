@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${UPLOAD_URL}
+          upload_url: $UPLOAD_URL
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
           asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_content_type: application/tar+gzip
