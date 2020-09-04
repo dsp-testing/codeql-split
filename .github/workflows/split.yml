@@ -32,6 +32,7 @@ jobs:
           tar -f codeql-bundle.tar --append codeql
           gzip codeql-bundle.tar
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
+          du -sh codeql-bundle-${{matrix.platform}}.tar.gz
 
       - name: Upload Platform Package
         uses: actions/upload-release-asset@v1
