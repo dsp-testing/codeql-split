@@ -16,25 +16,9 @@ jobs:
     strategy:
       matrix: 
         platform: ["linux64", "osx64", "win64"]
-        # language: ["cpp", "csharp", "go", "java", "javascript", "python"]
+        language: ["cpp", "csharp", "go", "java", "javascript", "python"]
 
     steps:
-      - name: Download
-        run: |
-          wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
-          wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
- 
-      - name: Platform Package
-        # Replace the codeql-binaries with the platform specific ones
-        run: |
-          gunzip codeql-bundle.tar.gz
-          tar -f codeql-bundle.tar --delete codeql
-          unzip codeql-${{matrix.platform}}.zip 
-          tar -f codeql-bundle.tar --append codeql
-          gzip codeql-bundle.tar
-          mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
-          du -sh codeql-bundle-${{matrix.platform}}.tar.gz
- 
       - name: Resolve Upload URL for the release
         id: save_url
         run: |
@@ -45,9 +29,26 @@ jobs:
           echo ${UPLOAD_URL}
           echo "::set-output name=upload_url::${UPLOAD_URL}"
         
-      - name: Upload Release Asset
+      - name: Download CodeQL CLI and Bundle
+        run: |
+          wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
+          wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
+ 
+      - name: Create Platform Package
+        # Replace the codeql-binaries with the platform specific ones
+        run: |
+          gunzip codeql-bundle.tar.gz
+          tar -f codeql-bundle.tar --delete codeql
+          unzip codeql-${{matrix.platform}}.zip 
+          tar -f codeql-bundle.tar --append codeql
+          gzip codeql-bundle.tar
+          mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
+          du -sh codeql-bundle-${{matrix.platform}}.tar.gz
+      
+      - name: Upload Platform Package
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
+        if: ${{ matrix.language == "cpp" }} # Only once per platform, cpp is arbitrary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
