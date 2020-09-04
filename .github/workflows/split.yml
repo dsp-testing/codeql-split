@@ -38,5 +38,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${RELEASE_URL} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          upload_url: ${RELEASE_URL}
+          asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
