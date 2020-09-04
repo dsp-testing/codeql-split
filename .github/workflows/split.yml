@@ -10,7 +10,7 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_URL: "https://api.github.com/repos/marcogario/codeql-split/releases/tag/v1/assets"
+      RELEASE_URL: "https://api.github.com/repos/marcogario/codeql-split/releases/1/assets"
 
     strategy:
       matrix: 
