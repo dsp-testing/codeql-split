@@ -41,3 +41,4 @@ jobs:
           upload_url: ${RELEASE_URL}
           asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
+          asset_content_type: application/tar+gzip
