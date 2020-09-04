@@ -10,7 +10,7 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_URL: "https://github.com/marcogario/codeql-split/releases/tag/v1"
+      RELEASE_URL: "https://github.com/marcogario/codeql-split/releases/tag/v1/assets"
 
     strategy:
       matrix: 
@@ -34,7 +34,17 @@ jobs:
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
 
-      - name: Upload a Platform Package
-        uses: actions/upload-artifact@v2.1.4
+      - name: Upload Platform Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          path: ./codeql-bundle-${{matrix.platform}}.tar.gz
+          upload_url: ${RELEASE_URL}
+          asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
+          asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
+          asset_content_type: application/tar+gzip
+
+#      - name: Upload a Platform Package
+#        uses: actions/upload-artifact@v2.1.4
+#        with:
+#          path: ./codeql-bundle-${{matrix.platform}}.tar.gz
