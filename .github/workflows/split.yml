@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: https://uploads.github.com/repos/marcogario/codeql-split/releases/30719496/assets{?name,label}
+          upload_url: "https://uploads.github.com/repos/marcogario/codeql-split/releases/30719496/assets{?name,label}"
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
           asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_content_type: application/tar+gzip
