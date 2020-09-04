@@ -34,7 +34,7 @@ jobs:
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
  
-      - run: echo ${{UPLOAD_URL}}
+      - run: echo ${UPLOAD_URL}
         
       - name: Upload Release Asset
         id: upload-release-asset 
