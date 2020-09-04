@@ -27,19 +27,19 @@ jobs:
       - name: Platform Package
         # Replace the codeql-binaries with the platform specific ones
         run: |
-          # gunzip codeql-bundle.tar.gz
-          #tar -f codeql-bundle.tar --delete codeql
-          #unzip codeql-${{matrix.platform}}.zip 
-          #tar -f codeql-bundle.tar --append codeql
-          #gzip codeql-bundle.tar
+          gunzip codeql-bundle.tar.gz
+          tar -f codeql-bundle.tar --delete codeql
+          unzip codeql-${{matrix.platform}}.zip 
+          tar -f codeql-bundle.tar --append codeql
+          gzip codeql-bundle.tar
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
  
-      - name: Resolve Upload URL
+      - name: Resolve Upload URL for the release
         id: save_url
         run: |
           UPLOAD_URL=$(curl -sS \
-               "https://api.github.com/repos/marcogario/codeql-split/releases/tags/${RELEASE_TAG}" \
+               "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${RELEASE_TAG}" \
                -H "Accept: application/json" \
                -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | jq .upload_url | sed s/\"//g)
           echo ${UPLOAD_URL}
