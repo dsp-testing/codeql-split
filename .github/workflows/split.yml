@@ -10,8 +10,9 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      UPLOAD_URL: https://uploads.github.com/repos/marcogario/codeql-split/releases/30719496/assets{?name,label}
-    
+      #UPLOAD_URL: https://uploads.github.com/repos/marcogario/codeql-split/releases/30719496/assets{?name,label}
+      RELEASE_TAG: "v1"
+
     strategy:
       matrix: 
         platform: ["linux64", "osx64", "win64"]
@@ -34,8 +35,14 @@ jobs:
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
  
-      - id: save_url
-        run: echo "::set-output name=upload_url::${UPLOAD_URL}"
+      - name: Resolve Upload URL
+        id: save_url
+        run: |
+          UPLOAD_URL=$(curl \
+               "https://api.github.com/repos/marcogario/codeql-split/releases/tags/${RELEASE_TAG}" \
+               -H "Accept: application/json" \
+               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}")
+          echo "::set-output name=upload_url::${UPLOAD_URL}"
         
       - name: Upload Release Asset
         id: upload-release-asset 
