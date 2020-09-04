@@ -10,7 +10,7 @@ jobs:
     env:
       CLI_RELEASE: "v2.2.5"
       BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_URL: "https://api.github.com/repos/marcogario/codeql-split/releases/30712907/assets"
+      RELEASE_URL: "https://uploads.github.com/repos/marcogario/codeql-split/releases/30712907/assets{?name,label}"
 
     strategy:
       matrix: 
@@ -22,15 +22,16 @@ jobs:
         run: |
           wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
           wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
-      
+ 
+     
       - name: Platform Package
         # Replace the codeql-binaries with the platform specific ones
         run: |
-          gunzip codeql-bundle.tar.gz
-          tar -f codeql-bundle.tar --delete codeql
-          unzip codeql-${{matrix.platform}}.zip 
-          tar -f codeql-bundle.tar --append codeql
-          gzip codeql-bundle.tar
+          # gunzip codeql-bundle.tar.gz
+          #tar -f codeql-bundle.tar --delete codeql
+          #unzip codeql-${{matrix.platform}}.zip 
+          #tar -f codeql-bundle.tar --append codeql
+          #gzip codeql-bundle.tar
           mv codeql-bundle.tar.gz codeql-bundle-${{matrix.platform}}.tar.gz
           du -sh codeql-bundle-${{matrix.platform}}.tar.gz
 
@@ -43,8 +44,3 @@ jobs:
           asset_name: codeql-bundle-${{matrix.platform}}.tar.gz
           asset_path: ./codeql-bundle-${{matrix.platform}}.tar.gz
           asset_content_type: application/tar+gzip
-
-#      - name: Upload a Platform Package
-#        uses: actions/upload-artifact@v2.1.4
-#        with:
-#          path: ./codeql-bundle-${{matrix.platform}}.tar.gz
