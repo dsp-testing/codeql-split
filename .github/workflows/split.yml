@@ -41,7 +41,7 @@ jobs:
           UPLOAD_URL=$(curl \
                "https://api.github.com/repos/marcogario/codeql-split/releases/tags/${RELEASE_TAG}" \
                -H "Accept: application/json" \
-               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | jq .upload_url)
+               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | jq .upload_url | sed s/\"//g)
           echo ${UPLOAD_URL}
           echo "::set-output name=upload_url::${UPLOAD_URL}"
         
