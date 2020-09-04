@@ -10,4 +10,5 @@ jobs:
        uses: github/codeql-action/init@v1
        with:
         tools: https://github.com/dsp-testing/codeql-split/releases/download/codeql-bundle-20200904/codeql-bundle-linux64-cpp.tar.gz
+        token: ${{ secrets.GITHUB_TOKEN }}
 
