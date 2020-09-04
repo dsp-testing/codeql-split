@@ -9,6 +9,6 @@ jobs:
      - name: Initialize CodeQL
        uses: github/codeql-action/init@v1
        with:
-        tools: https://github.com/dsp-testing/codeql-split/releases/download/codeql-bundle-20200904/codeql-bundle-linux64-cpp.tar.gz
+        tools: https://github.com/marcogario/codeql-split/releases/download/codeql-bundle-2020/codeql-bundle-linux64-cpp.tar.gz
         token: ${{ secrets.GITHUB_TOKEN }}
 
