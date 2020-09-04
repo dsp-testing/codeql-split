@@ -17,16 +17,22 @@ jobs:
         # language: ["cpp", "csharp", "go", "java", "javascript", "python"]
 
     steps:
+      - name: Create a Release (This would not be needed in the final version)
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: bundles
+          draft: true
+
       - name: Download
         run: |
           wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
-          #wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
-      - name: Unzip
-        run: gunzip codeql-bundle.tar.gz
-        
+          wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
+      
       - name: Platform Package
         # Replace the codeql-binaries with the platform specific ones
         run: |
+          gunzip codeql-bundle.tar.gz
           tar -f codeql-bundle.tar --delete codeql
           unzip codeql-${{matrix.platform}}.zip 
           tar -f codeql-bundle.tar --append codeql
