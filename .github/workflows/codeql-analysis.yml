@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: platform_lang_pkg
-        repository: https://github.com/github/codeql-action
+        repository: github/codeql-action
         path: codeql-action
       
     - name: Checkout repository
