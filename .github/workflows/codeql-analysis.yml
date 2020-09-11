@@ -16,6 +16,12 @@ jobs:
         language: ['javascript']
 
     steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: platform_lang_pkg
+        repository: https://github.com/github/codeql-action
+        path: codeql-action
+      
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
@@ -30,9 +36,9 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@platform_lang_pkg
+      uses: ./codeql-action/init
       with:
         languages: ${{ matrix.language }}
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@platform_lang_pkg
+      uses: ./codeql-action/analyze
