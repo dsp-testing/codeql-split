@@ -1,16 +1,21 @@
 name: Split Bundle
 
 on:
-  push:
-    branches: [ master ]
+ workflow_dispatch:
+    inputs:
+      cli-release:
+        description: 'CodeQL CLI Release (e.g., "v2.2.5")'
+        required: true
+      bundle-tag:
+        description: 'Tag of the bundle release (e.g., "codeql-bundle-20200826")'
+        required: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      CLI_RELEASE: "v2.2.5"
-      BUNDLE_RELEASE: "codeql-bundle-20200826"
-      RELEASE_TAG: "codeql-bundle-2020"
+      CLI_RELEASE: "${{ github.event.inputs.cli-release }}"
+      RELEASE_TAG: "${{ github.event.inputs.bundle-tag }}"
 
     strategy:
       matrix: 
@@ -30,7 +35,7 @@ jobs:
         
       - name: Download CodeQL CLI and Bundle
         run: |
-          wget --no-verbose "https://github.com/github/codeql-action/releases/download/${BUNDLE_RELEASE}/codeql-bundle.tar.gz"
+          wget --no-verbose "https://github.com/github/codeql-action/releases/download/${RELEASE_TAG}/codeql-bundle.tar.gz"
           wget --no-verbose "https://github.com/github/codeql-cli-binaries/releases/download/${CLI_RELEASE}/codeql-${{matrix.platform}}.zip"
  
       - name: Create Platform Package
