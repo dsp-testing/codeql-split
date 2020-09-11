@@ -16,11 +16,11 @@ jobs:
         language: ['javascript']
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: platform_lang_pkg
-        repository: github/codeql-action
-        path: ./codeql-action
+    - run: |
+        git clone git@github.com:github/codeql-action.git
+        cd codeql-action
+        git checkout platform_lang_pkg
+      
       
     - name: Checkout repository
       uses: actions/checkout@v2
