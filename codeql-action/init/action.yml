@@ -1,0 +1,24 @@
+name: 'CodeQL: Init'
+description: 'Setup the CodeQL tracer'
+author: 'GitHub'
+inputs:
+  tools:
+    description: URL of CodeQL tools
+    required: false
+    # If not specified the Action will check in several places until it finds the CodeQL tools.
+  languages:
+    description: The languages to be analysed
+    required: false
+  token:
+    default: ${{ github.token }}
+  matrix:
+    default: ${{ toJson(matrix) }}
+  config-file:
+    description: Path of the config file to use
+    required: false
+  queries:
+    description: Comma-separated list of additional queries to run. By default, this overrides the same setting in a configuration file; prefix with "+" to use both sets of queries.
+    required: false
+runs:
+  using: 'node12'
+  main: '../lib/init-action.js'
