@@ -2,7 +2,7 @@ name: "CodeQL"
 
 on:
   push:
- 
+
 jobs:
   analyze:
     name: Analyze
@@ -20,8 +20,8 @@ jobs:
         git clone git@github.com:github/codeql-action.git
         cd codeql-action
         git checkout platform_lang_pkg
-      
-      
+
+
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
@@ -41,5 +41,5 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - name: Perform CodeQL Analysis
-      uses: ./../codeql-action/analyze
+    #- name: Perform CodeQL Analysis
+    #  uses: ./codeql-action/analyze
