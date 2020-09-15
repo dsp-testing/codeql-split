@@ -13,15 +13,9 @@ jobs:
       matrix:
         # Override automatic language detection by changing the below list
         # Supported options are ['csharp', 'cpp', 'go', 'java', 'javascript', 'python']
-        language: ['javascript']
+        language: ['javascript', '']
 
     steps:
-    - run: |
-        git clone git@github.com:github/codeql-action.git
-        cd codeql-action
-        git checkout platform_lang_pkg
-
-
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
@@ -29,7 +23,6 @@ jobs:
         # a pull request then we can checkout the head.
         fetch-depth: 2
 
-    - run: find ../../
     # If this run was triggered by a pull request event, then checkout
     # the head of the pull request instead of the merge commit.
     - run: git checkout HEAD^2
@@ -37,7 +30,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: ./../codeql-action/init
+      uses: github/codeql-action/init@platform_lang_pkg
       with:
         languages: ${{ matrix.language }}
 
